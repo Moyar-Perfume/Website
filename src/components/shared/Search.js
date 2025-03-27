@@ -227,12 +227,30 @@ export default function Search({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* Content area - split into two columns */}
-        <div className="flex-1 flex overflow-hidden">
-          {/* Left column - Suggested keywords */}
-          <div className="w-1/4 border-r border-gray-200 overflow-y-auto py-6 px-4">
-            <h3 className="text-base font-medium mb-4">Suggested</h3>
-            <ul className="space-y-3">
+        {/* Content area - Responsive layout: column on mobile, row on desktop */}
+        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+          {/* Suggested keywords - Full width on mobile, 1/4 width on desktop */}
+          <div className="md:w-1/4 border-b md:border-b-0 md:border-r border-gray-200 overflow-y-auto py-4 px-4">
+            <h3 className="text-base font-medium mb-3">Suggested</h3>
+            {/* On mobile: horizontal scrolling buttons */}
+            <div className="flex md:hidden overflow-x-auto pb-2 gap-2 hide-scrollbar">
+              {filteredKeywords.map((keyword, index) => (
+                <button
+                  key={index}
+                  className={`text-sm whitespace-nowrap px-3 py-1.5 rounded-full border flex-shrink-0 transition-colors ${
+                    selectedCategory === keyword
+                      ? "bg-black text-white border-black"
+                      : "border-gray-200 hover:border-gray-400"
+                  }`}
+                  onClick={() => handleSelectKeyword(keyword)}
+                >
+                  {keyword}
+                </button>
+              ))}
+            </div>
+
+            {/* On desktop: vertical list */}
+            <ul className="hidden md:block space-y-3">
               {filteredKeywords.map((keyword, index) => (
                 <li key={index}>
                   <button
@@ -248,18 +266,18 @@ export default function Search({ isOpen, onClose }) {
             </ul>
           </div>
 
-          {/* Right column - Search results */}
-          <div className="w-3/4 overflow-y-auto">
+          {/* Search results - Full width on mobile, 3/4 width on desktop */}
+          <div className="md:w-3/4 flex-1 overflow-y-auto">
             {/* Results count */}
             {resultCount > 0 && (
-              <div className="px-6 py-4 border-b border-gray-200">
+              <div className="px-6 py-3 border-b border-gray-200">
                 <p className="text-sm text-gray-500">{resultCount} results</p>
               </div>
             )}
 
             {/* Results grid */}
             <div className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {results.map((product) => (
                   <div key={product.id} className="p-2">
                     <Product
@@ -295,6 +313,17 @@ export default function Search({ isOpen, onClose }) {
           </div>
         </div>
       </div>
+
+      {/* Add scrollbar hiding style */}
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }
