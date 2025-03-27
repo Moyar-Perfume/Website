@@ -1,6 +1,5 @@
 {
   "/product-list/page": "app/product-list/page.js",
-  "/admin/manage-product/page": "app/admin/manage-product/page.js",
   "/page": "app/page.js",
-  "/admin/manage-product/add-product/page": "app/admin/manage-product/add-product/page.js"
+  "/admin/manage-product/page": "app/admin/manage-product/page.js"
 }

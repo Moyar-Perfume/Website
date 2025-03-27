@@ -1,5 +1,5 @@
+import { CartProvider } from "@/contexts/CartContext";
 import RootClient from "./RootClient";
-
 export const metadata = {
   title: "Moyar Perfume",
   description: "Believe In Miracle",
@@ -9,8 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen">
-        <RootClient>{children}</RootClient>
+      <body>
+        <CartProvider>
+          <RootClient>{children}</RootClient>
+        </CartProvider>
       </body>
     </html>
   );

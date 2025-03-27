@@ -3,6 +3,8 @@
 import api from "@/constants/apiURL";
 import { useFilter } from "@/contexts/FilterContext";
 import { useEffect, useState } from "react";
+import Product from "@/components/shared/Product";
+
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -34,10 +36,16 @@ export default function ProductList() {
 
   return (
     <section className="flex min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div key={product.id}>{product.name}</div>
+            <div key={product.id} className="p-2">
+              <Product
+                product={product}
+                imageSize="h-[300px]"
+                showLikeButton={true}
+              />
+            </div>
           ))
         ) : (
           <div className="col-span-full text-center py-12">
